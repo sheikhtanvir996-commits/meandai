@@ -1,6 +1,35 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bn">
-<head>
+<head><!-- ১. প্রথমে ফায়ারবেস লাইব্রেরি যুক্ত করুন (যদি home.html-এ না থাকে) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+    // ২. আপনার ফায়ারবেস কনফিগ কোডটি এখানেও বসাতে হবে
+    const firebaseConfig = {
+        apiKey: "আপনার_কপি_করা_API_KEY",
+        authDomain: "আপনার_PROJECT_ID.firebaseapp.com",
+        projectId: "আপনার_PROJECT_ID",
+        storageBucket: "আপনার_PROJECT_ID.appspot.com",
+        messagingSenderId: "আপনার_SENDER_ID",
+        appId: "আপনার_APP_ID"
+    };
+
+    // ফায়ারবেস চালু করা
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // ৩. এই কোডটি চেক করবে ইউজার আসলেই লগইন করা আছে কিনা
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            // যদি ইউজার লগইন করা না থাকে, তবেই তাকে লগইন পেজে পাঠাবে
+            window.location.replace("index.html");
+        } else {
+            console.log("ইউজার লগইন অবস্থায় আছে:", user.email);
+            // এখানে আপনার হোমপেজের বাকি কাজ স্বাভাবিকভাবে চলবে
+        }
+    });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ME And Ai - হোমপেজ</title>
