@@ -398,6 +398,37 @@
     </div>
 
     <script>
+<!-- ১. প্রথমে ফায়ারবেস লাইব্রেরি যুক্ত করুন (যদি home.html-এ না থাকে) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+    // ২. আপনার ফায়ারবেস কনফিগ কোডটি এখানেও বসাতে হবে
+    const firebaseConfig = {
+        apiKey: "AIzaSyByAkyB_kF2UNf0wBC-vlujKAI2UvaKKuQ",
+  authDomain: "meandai-d8807.firebaseapp.com",
+  projectId: "meandai-d8807",
+  storageBucket: "meandai-d8807.firebasestorage.app",
+  messagingSenderId: "363015838398",
+  appId: "1:363015838398:web:1931eb3f37ea9d4cfa1cef",
+  measurementId: "G-24QZDE9SY0"
+    };
+
+    // ফায়ারবেস চালু করা
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // ৩. এই কোডটি চেক করবে ইউজার আসলেই লগইন করা আছে কিনা
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            // যদি ইউজার লগইন করা না থাকে, তবেই তাকে লগইন পেজে পাঠাবে
+            window.location.replace("index.html");
+        } else {
+            console.log("ইউজার লগইন অবস্থায় আছে:", user.email);
+            // এখানে আপনার হোমপেজের বাকি কাজ স্বাভাবিকভাবে চলবে
+        }
+    });
+</script>
         if (localStorage.getItem('isLoggedIn') !== 'true') { window.location.href = "index.html"; }
 
         function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
