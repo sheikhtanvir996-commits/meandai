@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 1000px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* বাম পাশের স্টাইল */
+.left-box {
+    width: 500px;
+    padding-bottom: 60px;
+}
+
+.fb-logo {
+    height: 106px;
+    margin-left: -28px;
+}
+
+.left-box h2 {
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 32px;
+    color: #1c1e21;
+}
+
+/* ডান পাশের স্টাইল */
+.right-box {
+    width: 396px;
+}
+
+.login-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 17px;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: #1877f2;
+    box-shadow: 0 0 0 2px #e7f3ff;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #166fe5;
+}
+
+.forgot-pass {
+    display: block;
+    margin-top: 16px;
+    color: #1877f2;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #dadde1;
+}
+
+.create-account-btn {
+    background-color: #42b72a;
+    color: white;
+    border: none;
+    padding: 14px 16px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.create-account-btn:hover {
+    background-color: #36a420;
+}
+
+.create-page {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 28px;
+    color: #1c1e21;
+}
+
+.create-page a {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.create-page a:hover {
+    text-decoration: underline;
+}

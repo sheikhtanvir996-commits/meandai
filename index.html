@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME And Ai - লগ ইন বা সাইন আপ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+        .login-container { display: flex; max-width: 1000px; width: 100%; justify-content: space-between; align-items: center; gap: 50px; }
+        .brand-section { max-width: 500px; }
+        .brand-title { font-size: 60px; color: #1877f2; font-weight: bold; margin-bottom: 15px; }
+        .brand-desc { font-size: 24px; color: #1c1e21; line-height: 1.3; }
+
+        .form-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        .input-field { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; outline: none; }
+        .input-field:focus { border-color: #1877f2; }
+
+        /* পাসওয়ার্ড বক্স ও আইকনের বিশেষ স্টাইল */
+        .password-container { position: relative; width: 100%; }
+        .password-container .input-field { padding-right: 45px; } /* আইকনের জন্য ডানে জায়গা */
+        .toggle-password { position: absolute; right: 15px; top: 16px; color: #606770; cursor: pointer; font-size: 18px; }
+
+        .login-btn { width: 100%; background: #1877f2; color: #fff; border: none; padding: 14px; border-radius: 6px; font-size: 20px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
+        .login-btn:hover { background: #166fe5; }
+
+        .forgot-link { color: #1877f2; text-decoration: none; font-size: 14px; display: inline-block; margin-bottom: 20px; cursor: pointer; }
+        .forgot-link:hover { text-decoration: underline; }
+        .divider { border-top: 1px solid #dadde1; margin-bottom: 20px; }
+
+        .create-account-btn { background: #42b72a; color: #fff; border: none; padding: 14px 20px; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer; }
+        .create-account-btn:hover { background: #36a420; }
+
+        /* পপ-আপ বা মোডাল স্টাইল */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #fff; width: 432px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); text-align: left; position: relative; border: 1px solid #ccc; }
+        .modal-header { font-size: 26px; font-weight: bold; margin-bottom: 5px; color: #1c1e21; }
+        .modal-subheader { color: #606770; font-size: 15px; margin-bottom: 15px; }
+        .close-btn { position: absolute; right: 15px; top: 15px; font-size: 24px; cursor: pointer; color: #606770; }
+
+        @media (max-width: 900px) {
+            .login-container { flex-direction: column; text-align: center; gap: 30px; }
+            .brand-section { max-width: 100%; }
+            .brand-title { font-size: 45px; }
+            .brand-desc { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="brand-section">
+            <div class="brand-title">ME And Ai</div>
+            <div class="brand-desc">ME And Ai আপনাকে আপনার জীবনের মানুষদের সাথে যোগাযোগ রাখতে এবং শেয়ার করতে সাহায্য করে।</div>
+        </div>
+
+        <div class="form-section">
+            <input type="text" id="loginEmail" placeholder="ইমেল ঠিকানা বা ফোন নম্বর" class="input-field">
+
+            <div class="password-container">
+                <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড" class="input-field">
+                <i class="fa-regular fa-eye-slash toggle-password" id="eyeIcon" onclick="togglePasswordVisibility()"></i>
+            </div>
+
+            <button class="login-btn" onclick="handleLogin()">লগ ইন করুন</button>
+            <span class="forgot-link" onclick="openForgotModal()">পাসওয়ার্ড ভুলে গেছেন?</span>
+            <div class="divider"></div>
+            <button class="create-account-btn" onclick="openSignUpModal()">নতুন অ্যাকাউন্ট তৈরি করুন</button>
+        </div>
+    </div>
+
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('signUpModal')">&times;</span>
+            <div class="modal-header">সাইন আপ করুন</div>
+            <div class="modal-subheader">এটি সহজ এবং দ্রুত।</div>
+            <div class="divider"></div>
+
+            <input type="text" id="regName" placeholder="আপনার পুরো নাম" class="input-field">
+            <input type="text" id="regEmail" placeholder="মোবাইল নম্বর বা ইমেল ঠিকানা" class="input-field">
+            <input type="password" id="regPassword" placeholder="নতুন পাসওয়ার্ড" class="input-field">
+
+            <button class="create-account-btn" style="width:100%; margin-top: 10px;" onclick="handleSignUp()">সাইন আপ করুন</button>
+        </div>
+    </div>
+
+    <div class="modal" id="forgotModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('forgotModal')">&times;</span>
+            <div class="modal-header" style="font-size: 22px;">আপনার অ্যাকাউন্টটি খুঁজুন</div>
+            <div class="modal-subheader">পাসওয়ার্ড রিসেট করতে আপনার রেজিস্টার্ড আইডি লিখুন।</div>
+            <div class="divider"></div>
+
+            <input type="text" id="resetEmail" placeholder="আপনার রেজিস্টার্ড ইমেল বা ফোন নম্বর" class="input-field">
+            <input type="password" id="resetNewPassword" placeholder="নতুন পাসওয়ার্ড দিন" class="input-field">
+
+            <button class="login-btn" style="background: #42b72a; margin-top: 10px;" onclick="handlePasswordReset()">পাসওয়ার্ড পরিবর্তন করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // সেশন চেক
+        if(localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = "home.html";
+        }
+
+        // মোডাল ওপেন ও ক্লোজ ফাংশনসমূহ
+        function openSignUpModal() { document.getElementById("signUpModal").style.display = "flex"; }
+        function openForgotModal() { document.getElementById("forgotModal").style.display = "flex"; }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = "none"; }
+
+        // 👀 পাসওয়ার্ড হাইড এবং শো করার ফাংশন
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("loginPassword");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                // চোখের আইকন পরিবর্তন (খোলা চোখ)
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            } else {
+                passwordInput.type = "password";
+                // চোখের আইকন পরিবর্তন (বন্ধ চোখ)
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            }
+        }
+
+        // সাইন-আপ ফাংশন
+        function handleSignUp() {
+            const name = document.getElementById("regName").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const password = document.getElementById("regPassword").value.trim();
+
+            if(!name || !email || !password) {
+                alert("অনুগ্রহ করে সব ঘরগুলো সঠিকভাবে পূরণ করুন!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+
+            if(users[email]) {
+                alert("এই ইমেল বা মোবাইল নম্বর দিয়ে ইতিমধ্যেই অ্যাকাউন্ট তৈরি করা আছে!");
+                return;
+            }
+
+            users[email] = { name: name, password: password };
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+            alert("আপনার অ্যাকাউন্টটি সফলভাবে তৈরি হয়েছে! এবার লগইন করুন। 🎉");
+            closeModal('signUpModal');
+            document.getElementById("loginEmail").value = email;
+        }
+
+        // লগইন ফাংশন
+        function handleLogin() {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+
+            if(!email || !password) {
+                alert("ইউজার আইডি এবং পাসওয়ার্ড দুটোই প্রদান করুন!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+
+            if(users[email] && users[email].password === password) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', users[email].name);
+                window.location.href = "home.html";
+            } else {
+                alert("ভুল ইমেল/মোবাইল নম্বর অথবা পাসওয়ার্ড দিয়েছেন! আবার চেষ্টা করুন।");
+            }
+        }
+
+        // পাসওয়ার্ড রিসেট করার ফাংশন
+        function handlePasswordReset() {
+            const email = document.getElementById("resetEmail").value.trim();
+            const newPassword = document.getElementById("resetNewPassword").value.trim();
+
+            if(!email || !newPassword) {
+                alert("অনুগ্রহ করে আইডি এবং নতুন পাসওয়ার্ড উভয়ই পূরণ করুন!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+
+            if(users[email]) {
+                users[email].password = newPassword;
+                localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+                alert("আপনার পাসওয়ার্ডটি সফলভাবে পরিবর্তন করা হয়েছে! নতুন পাসওয়ার্ড দিয়ে লগইন করুন। 🔐");
+                closeModal('forgotModal');
+
+                document.getElementById("loginEmail").value = email;
+                document.getElementById("loginPassword").value = "";
+            } else {
+                alert("দুঃখিত, এই ইমেল বা ফোন নম্বর দিয়ে কোনো অ্যাকাউন্ট খুঁজে পাওয়া যায়নি!");
+            }
+        }
+    </script>
+</body>
+</html>
