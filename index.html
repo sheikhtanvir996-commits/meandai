@@ -74,51 +74,57 @@
   measurementId: "G-24QZDE9SY0"
         };
 
-        // ফায়ারবেস চালু করার কোড
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        // ফায়ারবেস চালু করার কোড (এটি আগের মতোই থাকবে)
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-        // নতুন অ্যাকাউন্ট খোলার আসল ফাংশন
-        function registerUser() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+// নতুন অ্যাকাউন্ট খোলার আসল ফাংশন
+function registerUser() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-            if(!email || !password) {
-                alert("দয়া করে ইমেইল এবং পাসওয়ার্ড দুটিই লিখুন।");
-                return;
-            }
+    if(!email || !password) {
+        alert("দয়া করে ইমেইল এবং পাসওয়ার্ড দুটিই লিখুন।");
+        return;
+    }
 
-            auth.createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                alert("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন আপনি হোমপেজে যাচ্ছেন।");
-                // আগের কোড মুছে এই নিচের লাইনটি বসান:
-window.location.href = "https://sheikhtanvir996-commits.github.io/meandai/home.html";
-            })
-            .catch((error) => {
-                alert("অ্যাকাউন্ট তৈরি করা যায়নি: " + error.message);
-            });
-        }
+    auth.createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        alert("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এবার হোমপেজে নিয়ে যাওয়া হচ্ছে...");
+        
+        // শক্তিশালী রিডাইরেক্ট পদ্ধতি (সব ব্রাউজারে কাজ করবে)
+        setTimeout(function() {
+            window.location.replace("home.html");
+        }, 500);
+    })
+    .catch((error) => {
+        alert("অ্যাকাউন্ট তৈরি করা যায়নি: " + error.message);
+    });
+}
 
-        // লগইন করার আসল ফাংশন
-        function loginUser() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+// লগইন করার আসল ফাংশন
+function loginUser() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-            if(!email || !password) {
-                alert("দয়া করে ইমেইল এবং পাসওয়ার্ড লিখুন।");
-                return;
-            }
+    if(!email || !password) {
+        alert("দয়া করে ইমেইল এবং পাসওয়ার্ড লিখুন।");
+        return;
+    }
 
-            auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                alert("লগইন সফল!");
-                // আগের কোড মুছে এই নিচের লাইনটি বসান:
-window.location.href = "https://sheikhtanvir996-commits.github.io/meandai/home.html";
-            })
-            .catch((error) => {
-                alert("ভুল ইমেইল বা পাসওয়ার্ড! অথবা এই ইমেইলে কোনো অ্যাকাউন্ট নেই।");
-            });
-        }
+    auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        alert("লগইন সফল! হোমপেজে নিয়ে যাওয়া হচ্ছে...");
+        
+        // শক্তিশালী রিডাইরেক্ট পদ্ধতি (সব ব্রাউজারে কাজ করবে)
+        setTimeout(function() {
+            window.location.replace("home.html");
+        }, 500);
+    })
+    .catch((error) => {
+        alert("ভুল ইমেইল বা পাসওয়ার্ড! অথবা এই ইমেইলে কোনো অ্যাকাউন্ট নেই।");
+    });
+}
     </script>
 </body>
 </html>
